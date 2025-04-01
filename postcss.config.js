@@ -8,7 +8,7 @@ export default {
     : [
         // Setting up purgeCSS for the external CSS framework
         purgeCSSPlugin({
-          content: ["./src/**/*.ts"],
+          content: ["./src/**/*.ts", "*.html"],
           css: ["./src/style.css"],
           variables: true,
         }),
