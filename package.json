@@ -1,0 +1,23 @@
+{
+  "name": "etrade-tax-report-generator-de",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "~5.7.2",
+    "vite": "^6.2.0"
+  },
+  "dependencies": {
+    "@fullhuman/postcss-purgecss": "^7.0.2",
+    "bulma": "^1.0.3",
+    "csv-parse": "^5.6.0",
+    "lit-html": "^3.2.1",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
+    "xstate": "^5.19.2"
+  }
+}
