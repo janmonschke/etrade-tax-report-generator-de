@@ -20,7 +20,7 @@ export function UploadForm({ onFileSelected }: Props) {
       <h1 class="title is-size-3">E*Trade → Anlage KAP (tax year 2024)</h1>
       <article class="message is-info" id="disclaimer" style="max-width: 500px">
         <div class="message-body">
-          I am not a tax advisor and this is not tax advise. Always make sure to
+          I am not a tax advisor and this is not tax advice. Always make sure to
           check if these numbers make sense in your case.
         </div>
       </article>
