@@ -1,4 +1,3 @@
-import "./style.css";
 import { createActor } from "xstate";
 import { etradeAppStateMachine } from "./state";
 import { render } from "lit-html";
@@ -8,6 +7,8 @@ import { ErrorView } from "./components/Error";
 
 const appContainer =
   document.getElementById("app") || document.createElement("div");
+// reset any pre-existing markup
+appContainer.innerHTML = "";
 
 if (!appContainer) {
   alert("Cannot find element with id `#app`");
