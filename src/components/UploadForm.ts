@@ -45,7 +45,7 @@ export function UploadForm({ onFileSelected }: Props) {
             @change=${(event: Event) => onFileChange(event)}
             style="display: none;"
           />
-          Upload the .xlsx file
+          Select the .xlsx file
         </label>
       </form>
     </div>
