@@ -1,8 +1,20 @@
 import { read, utils } from "xlsx";
-import { EnrichedSale, Result, Row } from "../types";
-import exchangeRates from "../data/exchange_rates_2024.json";
+import { EnrichedSale, Result, Row, TaxYear } from "../types";
+import exchangeRates2024 from "../data/exchange_rates_2024.json";
+import exchangeRates2023 from "../data/exchange_rates_2023.json";
 
-export async function parseXlsx(file: File): Promise<Result> {
+const exchangeRates: Record<TaxYear, Record<string, number>> = {
+  "2023": exchangeRates2023,
+  "2024": exchangeRates2024,
+};
+
+export async function parseXlsx({
+  file,
+  taxYear,
+}: {
+  file: File;
+  taxYear: TaxYear;
+}): Promise<Result> {
   try {
     const aBuffer = await file.arrayBuffer();
     const workbook = read(aBuffer, { type: "buffer" });
@@ -14,15 +26,16 @@ export async function parseXlsx(file: File): Promise<Result> {
     const sales = rows.filter((row) => row["Record Type"] === "Sell");
     console.info("Sale rows parsed", sales.length);
 
+    const selectedRates = exchangeRates[taxYear];
+    console.info("Selected exchange rates", selectedRates);
+
     const result: Result = sales.reduce<Result>(
       (res, currSale) => {
-        const exchangeRate = (exchangeRates as Record<string, number>)[
-          currSale["Date Sold"]
-        ];
+        const exchangeRate = selectedRates[currSale["Date Sold"]];
         if (!exchangeRate) {
-          alert(`Could not find an exchange rate for ${currSale["Date Sold"]}`);
           throw new Error(
-            `Could not find an exchange rate for ${currSale["Date Sold"]}`
+            `Could not find an exchange rate for ${currSale["Date Sold"]}.
+            Did you select the correct tax year?`
           );
         }
         // Enrich the sale with exchange rate

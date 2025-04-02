@@ -1,3 +1,5 @@
+export type TaxYear = "2023" | "2024";
+
 export type Sale = {
   "Record Type": "Sell";
   "Order Type": "Sell Restricted Stock" | "RS STC";

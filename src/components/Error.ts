@@ -10,7 +10,7 @@ export function ErrorView({
   return html`
     <div>
       <article
-        class="message is-danger is-small"
+        class="message is-danger"
         id="disclaimer"
         style="max-width: 600px"
       >

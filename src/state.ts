@@ -1,34 +1,42 @@
 import { assign, fromPromise, setup } from "xstate";
-import { Result, Sale } from "./types";
+import { Result, Sale, TaxYear } from "./types";
 import { parseXlsx } from "./actions/parseXlsx";
 
-const parseSalesFromFile = fromPromise<Result, File>(async function ({
-  input,
-}) {
+const parseSalesFromFile = fromPromise<
+  Result,
+  { file: File; taxYear: TaxYear }
+>(async function ({ input }) {
   return parseXlsx(input);
 });
 
+const initialContext = {
+  taxYear: "2024",
+};
 export const etradeAppStateMachine = setup({
   actors: {
     parseSalesFromFile,
   },
 }).createMachine({
   types: {
-    context: {} as { result: Result; error: string },
+    context: {} as { result: Result; error: string; taxYear: TaxYear },
     events: {} as
+      | { type: "year.selected"; taxYear: TaxYear }
       | { type: "file.selected"; file: File }
       | { type: "file.parsed"; sales: Sale[] }
       | { type: "state.reset" },
   },
   initial: "initial",
-  context: {
-    sales: [],
-  },
+  context: initialContext,
   states: {
     initial: {
       on: {
         "file.selected": {
           target: "parsing",
+        },
+        "year.selected": {
+          actions: assign({
+            taxYear: ({ event }) => event.taxYear,
+          }),
         },
       },
     },
@@ -36,7 +44,7 @@ export const etradeAppStateMachine = setup({
       invoke: {
         id: "parsing",
         src: "parseSalesFromFile",
-        input: (s) => s.event.file,
+        input: (s) => ({ file: s.event.file, taxYear: s.context.taxYear }),
         onDone: {
           target: "result",
           actions: assign({
@@ -56,7 +64,10 @@ export const etradeAppStateMachine = setup({
     },
     error: {
       on: {
-        "state.reset": "initial",
+        "state.reset": {
+          target: "initial",
+          actions: assign(initialContext),
+        },
       },
     },
   },

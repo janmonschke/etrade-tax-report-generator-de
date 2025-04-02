@@ -4,6 +4,7 @@ import { render } from "lit-html";
 import { UploadForm } from "./components/UploadForm";
 import { ResultView } from "./components/Result";
 import { ErrorView } from "./components/Error";
+import { TaxYear } from "./types";
 
 const appContainer =
   document.getElementById("app") || document.createElement("div");
@@ -20,7 +21,11 @@ actor.subscribe((state) => {
   switch (state.value) {
     case "initial":
       return render(
-        UploadForm({ onFileSelected: sendFileSelected }),
+        UploadForm({
+          onFileSelected: sendFileSelected,
+          onTaxYearSelected: sendTaxYearSelected,
+          taxYear: state.context.taxYear,
+        }),
         appContainer
       );
     case "parsing":
@@ -38,6 +43,10 @@ actor.subscribe((state) => {
 });
 
 actor.start();
+
+function sendTaxYearSelected(taxYear: TaxYear) {
+  actor.send({ type: "year.selected", taxYear });
+}
 
 function sendFileSelected(file: File) {
   actor.send({ type: "file.selected", file });
