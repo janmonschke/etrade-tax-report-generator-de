@@ -21,7 +21,8 @@ export function UploadForm({ onFileSelected }: Props) {
       <article class="message is-info" id="disclaimer" style="max-width: 500px">
         <div class="message-body">
           I am not a tax advisor and this is not tax advice. Always make sure to
-          check if these numbers make sense in your case.
+          check if these numbers make sense in your case. Also, only tax year
+          2024 is supported for now.
         </div>
       </article>
       <ol>
