@@ -32,6 +32,7 @@ export function UploadForm({ onFileSelected }: Props) {
             >E*Trade</a
           >
         </li>
+        <li class="is-size-6 ml-4 mb-2">At Work</li>
         <li class="is-size-6 ml-4 mb-2">My Account</li>
         <li class="is-size-6 ml-4 mb-2">Gains & Losses</li>
         <li class="is-size-6 ml-4 mb-2">Tax Year 2024</li>
