@@ -4,14 +4,20 @@ import { Result } from "../types";
 export function Summary({ aggregates: { total } }: Result) {
   return html`
     <div class="content">
-      <dl>
-        <dt class="has-text-weight-semibold">Adjusted Gains/Losses</dt>
-        <dd>${total.adjustedGainLossEuro.toFixed(2)}€</dd>
-        <dt class="has-text-weight-semibold">Total Gains</dt>
-        <dd>${total.gainsEuro.toFixed(2)}€</dd>
-        <dt class="has-text-weight-semibold">Total Losses</dt>
-        <dd>${total.lossesEuro.toFixed(2)}€</dd>
-      </dl>
+      <table>
+        <tr>
+          <td class="has-text-weight-semibold">Adjusted Gains/Losses</td>
+          <td>${total.adjustedGainLossEuro.toFixed(2)}€</td>
+        </tr>
+        <tr>
+          <td class="has-text-weight-semibold">Total Gains</td>
+          <td>${total.gainsEuro.toFixed(2)}€</td>
+        </tr>
+        <tr>
+          <td class="has-text-weight-semibold">Total Losses</td>
+          <td>${total.lossesEuro.toFixed(2)}€</td>
+        </tr>
+      </table>
     </div>
   `;
 }
