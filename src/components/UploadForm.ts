@@ -43,6 +43,10 @@ export function UploadForm({
           >
             <option>2024</option>
             <option>2023</option>
+            <option>2022</option>
+            <option>2021</option>
+            <option>2020</option>
+            <option>2019</option>
           </select>
         </div>
       </div>
