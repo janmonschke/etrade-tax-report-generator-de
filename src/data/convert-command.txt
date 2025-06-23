@@ -1,0 +1,27 @@
+convert downloaded files from ECB Europe to json e.g.:
+cat ~/Downloads/ECB\ Data\ Portal_20250611125540.csv| csv2json | jq '[ .[] | select(.DATE | startswith("2022-")) | .DATE |= (split("-") | "\(.[1])/\(.[2])/\(.[0])") ]' | jq 'map({(.DATE): ."US dollar/Euro (EXR.D.USD.EUR.SP00.A)" | tonumber }) | add'
+
+Download monthly PDFs with Courses from Bundefinanzministerium
+https://www.bundesfinanzministerium.de/Web/DE/Themen/Steuern/Steuerarten/Umsatzsteuer/umsatzsteuer.html
+https://www.bundesfinanzministerium.de/Web/DE/Themen/Steuern/Steuerarten/Umsatzsteuer/Umsatzsteuer_Umrechnungskurse/umsatzsteuer_umrechnungskurse.html
+https://www.bundesfinanzministerium.de/Content/DE/Downloads/BMF_Schreiben/Steuerarten/Umsatzsteuer/Umsatzsteuer-Umrechnungskurse/2020-01-29-umsatzsteuer-umrechnungskurse-2019.pdf
+https://www.bundesfinanzministerium.de/Content/DE/Downloads/BMF_Schreiben/Steuerarten/Umsatzsteuer/Umsatzsteuer-Umrechnungskurse/2021-02-02-umsatzsteuer-umrechnungskurse-2020.pdf
+https://www.bundesfinanzministerium.de/Content/DE/Downloads/BMF_Schreiben/Steuerarten/Umsatzsteuer/Umsatzsteuer-Umrechnungskurse/2022-02-02-umsatzsteuer-umrechnungskurse-2021.pdf
+https://www.bundesfinanzministerium.de/Content/DE/Downloads/BMF_Schreiben/Steuerarten/Umsatzsteuer/Umsatzsteuer-Umrechnungskurse/2023-02-02-umsatzsteuer-umrechnungskurse-2022.pdf
+https://www.bundesfinanzministerium.de/Content/DE/Downloads/BMF_Schreiben/Steuerarten/Umsatzsteuer/Umsatzsteuer-Umrechnungskurse/2024-02-02-umsatzsteuer-umrechnungskurse-2023.pdf
+https://www.bundesfinanzministerium.de/Content/DE/Downloads/BMF_Schreiben/Steuerarten/Umsatzsteuer/Umsatzsteuer-Umrechnungskurse/2025-02-03-umsatzsteuer-umrechnungskurse-2024.pdf
+https://www.bundesfinanzministerium.de/Content/DE/Downloads/BMF_Schreiben/Steuerarten/Umsatzsteuer/Umsatzsteuer-Umrechnungskurse/2025-06-02-umsatzsteuer-umrechnungskurse-2025.html
+
+extracted tables using AI with this prompt:
+Dieses PDF enthält eine Tabelle mit dem Tabellenkopf:
+Land
+Währung
+Januar
+Februar
+<andere Monate>
+
+Bitte nur die Tabelle als quoted CSV extrahieren.
+
+
+Then converted the files using this command e.g.:
+cat ~/Downloads/bundesbank-2020.csv | csv2json | grep USA | sed 's/ USD//g' | sed 's/\\\\nUSD//g' | jq | grep -vE "USA|Euro" | jq 'with_entries({key: ((.key|tonumber) - 1 | tostring), value: .value})' > ~/Downloads/bundesbank-2020.json

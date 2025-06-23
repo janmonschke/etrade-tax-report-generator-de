@@ -2,8 +2,16 @@ import { read, utils } from "xlsx";
 import { EnrichedSale, Result, Row, TaxYear } from "../types";
 import exchangeRates2024 from "../data/exchange_rates_2024.json";
 import exchangeRates2023 from "../data/exchange_rates_2023.json";
+import exchangeRates2022 from "../data/exchange_rates_2022.json";
+import exchangeRates2021 from "../data/exchange_rates_2021.json";
+import exchangeRates2020 from "../data/exchange_rates_2020.json";
+import exchangeRates2019 from "../data/exchange_rates_2019.json";
 
 const exchangeRates: Record<TaxYear, Record<string, number>> = {
+  "2019": exchangeRates2019,
+  "2020": exchangeRates2020,
+  "2021": exchangeRates2021,
+  "2022": exchangeRates2022,
   "2023": exchangeRates2023,
   "2024": exchangeRates2024,
 };

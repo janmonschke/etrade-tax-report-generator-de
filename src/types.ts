@@ -1,4 +1,4 @@
-export type TaxYear = "2023" | "2024";
+export type TaxYear = "2019" | "2020" | "2021" | "2022" | "2023" | "2024";
 
 export type Sale = {
   "Record Type": "Sell";
